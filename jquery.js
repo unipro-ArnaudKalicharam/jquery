@@ -8984,11 +8984,16 @@ jQuery.extend( jQuery.fx, {
 		},
 
 		_default: function( fx ) {
-			if ( fx.elem.style && fx.elem.style[ fx.prop ] != null ) {
-				fx.elem.style[ fx.prop ] = fx.now + fx.unit;
-			} else {
-				fx.elem[ fx.prop ] = fx.now;
+			// BUG FIX - Added try catch block to fix issue with IE8 crashing due
+			// to an "invalid argument" error.
+			try {
+				if ( fx.elem.style && fx.elem.style[ fx.prop ] != null ) {
+						fx.elem.style[ fx.prop ] = fx.now + fx.unit;
+				} else {
+					fx.elem[ fx.prop ] = fx.now;
+				}
 			}
+			catch(e) {}
 		}
 	}
 });
